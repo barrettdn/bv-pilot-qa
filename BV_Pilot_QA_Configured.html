@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>BV Pilot Franchisee — Investor Q&A</title>
+<style>
+:root {
+  --espresso:#2C1A0E; --bark:#3D2B1F; --mocha:#7A5C4A;
+  --gold:#B8924A; --gold-light:#D4AF7A; --gold-pale:#F5ECD8;
+  --cream:#FAF7F4; --sand:#F0EBE3; --stone:#E8E0D6;
+  --sage:#4A6B58; --red:#C0392B; --blue:#2E75B6;
+  --stephanie:#7B5EA7; --melanie:#0D6B6E; --frank:#8B3A00;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:inherit;}
+html,body{margin:0;padding:0;background:var(--sand);font-family:Inter,Arial,sans-serif;color:var(--espresso);}
+
+/* ── HEADER */
+.header{background:var(--bark);padding:18px 24px 14px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.25);}
+.header-row{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;}
+.hbrand{font-size:9px;color:var(--gold-light);letter-spacing:.16em;text-transform:uppercase;margin-bottom:3px;}
+.htitle{font-size:1.2rem;font-weight:300;color:var(--cream);font-family:Georgia,serif;}
+.hsub{font-size:11px;color:rgba(250,247,244,.45);margin-top:2px;}
+.pwrap{display:flex;flex-direction:column;align-items:flex-end;gap:3px;}
+.plabel{font-size:10px;color:var(--gold-light);}
+.pbar{width:160px;height:5px;background:rgba(255,255,255,.12);border-radius:3px;overflow:hidden;}
+.pfill{height:100%;background:var(--gold);border-radius:3px;transition:width .4s;}
+
+/* ── TABS */
+.tabs{display:flex;overflow-x:auto;background:var(--espresso);padding:0 16px;scrollbar-width:none;}
+.tabs::-webkit-scrollbar{display:none;}
+.tab{padding:10px 14px;font-size:10px;font-weight:700;color:rgba(250,247,244,.4);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;letter-spacing:.08em;text-transform:uppercase;transition:all .15s;user-select:none;}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+
+.main{max-width:840px;margin:0 auto;padding:20px 16px 80px;}
+
+/* ── CONFIG BANNER (shown when not configured) */
+.config-banner{background:var(--gold-pale);border:2px solid var(--gold);border-radius:10px;padding:20px 24px;margin-bottom:24px;}
+.config-title{font-size:1.1rem;font-weight:700;color:var(--espresso);margin-bottom:10px;}
+.config-desc{font-size:13px;color:var(--mocha);line-height:1.65;margin-bottom:16px;}
+.config-row{display:flex;flex-direction:column;gap:8px;margin-bottom:12px;}
+.config-label{font-size:11px;font-weight:700;color:var(--espresso);}
+.config-input{border:1px solid var(--stone);border-radius:5px;padding:8px 12px;font-size:13px;font-family:monospace;color:var(--espresso);width:100%;}
+.config-input:focus{outline:none;border-color:var(--gold);}
+.config-btn{background:var(--gold);color:#fff;border:none;padding:10px 24px;border-radius:5px;font-size:13px;font-weight:700;cursor:pointer;}
+.config-btn:hover{background:var(--espresso);}
+.config-note{font-size:11px;color:var(--mocha);margin-top:8px;line-height:1.6;}
+.config-code{background:#fff;border:1px solid var(--stone);border-radius:4px;padding:10px 12px;font-size:11px;font-family:monospace;color:var(--espresso);white-space:pre-wrap;margin-top:8px;}
+
+/* ── SUMMARY */
+.summary{background:var(--espresso);border-radius:8px;padding:12px 16px;margin-bottom:20px;display:flex;gap:20px;flex-wrap:wrap;}
+.sstat{text-align:center;}
+.sn{font-size:1.4rem;font-weight:300;font-family:Georgia,serif;color:var(--gold);line-height:1;}
+.sl{font-size:9px;color:rgba(250,247,244,.45);text-transform:uppercase;letter-spacing:.1em;margin-top:2px;}
+
+.ceyebrow{font-size:9px;color:var(--gold);letter-spacing:.16em;text-transform:uppercase;margin-bottom:5px;}
+.ctitle{font-size:1.4rem;font-weight:300;font-family:Georgia,serif;margin-bottom:5px;}
+.cdesc{font-size:12px;color:var(--mocha);line-height:1.6;margin-bottom:18px;}
+
+/* ── QUESTION CARD */
+.qcard{background:var(--cream);border:1px solid var(--stone);border-radius:10px;margin-bottom:14px;overflow:hidden;}
+.qcard.answered{border-left:3px solid var(--sage);}
+.qcard.followup{border-left:3px solid var(--gold);background:var(--gold-pale);}
+.qhead{padding:14px 16px 10px;}
+.qmeta{display:flex;align-items:center;gap:8px;margin-bottom:7px;flex-wrap:wrap;}
+.badge{font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:3px;background:var(--stone);color:var(--mocha);}
+.badge.done{background:var(--sage);color:#fff;}
+.badge.fu{background:var(--gold);color:#fff;}
+.qnum{font-size:10px;font-weight:600;color:var(--mocha);}
+.qtext{font-size:14px;font-weight:600;color:var(--espresso);line-height:1.5;}
+.qctx{font-size:11px;color:var(--mocha);margin-top:4px;font-style:italic;line-height:1.5;}
+
+/* ── ANSWERS */
+.answers-wrap{padding:0 16px 10px;}
+.alabel{font-size:9px;color:var(--mocha);text-transform:uppercase;letter-spacing:.1em;margin-bottom:7px;}
+.abubble{border-radius:7px;padding:10px 12px;margin-bottom:7px;background:var(--sand);border:1px solid var(--stone);}
+.ameta{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;}
+.aauthor{font-size:10px;font-weight:700;}
+.atime{font-size:9px;color:var(--mocha);}
+.atext{font-size:13px;color:var(--espresso);line-height:1.65;white-space:pre-wrap;}
+
+/* ── INPUT */
+.inputarea{padding:0 16px 14px;}
+.ilabel{font-size:10px;color:var(--mocha);margin-bottom:5px;}
+.responders{display:flex;gap:5px;margin-bottom:8px;flex-wrap:wrap;}
+.rbtn{padding:5px 14px;border-radius:12px;border:1px solid var(--stone);background:#fff;font-size:11px;cursor:pointer;color:var(--mocha);transition:all .12s;font-weight:500;}
+.ainput{width:100%;border:1.5px solid var(--stone);border-radius:6px;padding:10px 12px;font-size:13px;font-family:inherit;resize:vertical;min-height:80px;color:var(--espresso);background:#fff;transition:border-color .12s;}
+.ainput:focus{outline:none;border-color:var(--gold);}
+.ifooter{display:flex;justify-content:space-between;align-items:center;margin-top:7px;flex-wrap:wrap;gap:6px;}
+.ccount{font-size:10px;color:var(--mocha);}
+.btnrow{display:flex;gap:7px;}
+.sbtn{background:var(--gold);color:#fff;border:none;padding:10px 26px;border-radius:5px;font-size:13px;font-weight:700;cursor:pointer;transition:background .12s;}
+.sbtn:hover{background:var(--espresso);}
+.sbtn:disabled{background:var(--stone);cursor:default;}
+.gbtn{background:var(--espresso);color:var(--gold-light);border:none;padding:8px 14px;border-radius:5px;font-size:11px;font-weight:600;cursor:pointer;transition:all .12s;}
+.gbtn:hover{background:var(--bark);}
+.gbtn:disabled{opacity:.45;cursor:default;}
+
+.loading-card{padding:20px;text-align:center;color:var(--mocha);font-size:13px;}
+.spinner{width:20px;height:20px;border:2px solid var(--stone);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;display:inline-block;margin-bottom:8px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);padding:10px 20px;border-radius:6px;font-size:13px;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;font-weight:600;}
+.toast.show{opacity:1;}
+.toast.ok{background:#14532d;color:#bbf7d0;}
+.toast.err{background:#7f1d1d;color:#fca5a5;}
+
+.exportbtn{display:block;margin:20px auto 0;background:#fff;border:1px solid var(--stone);color:var(--espresso);padding:10px 24px;border-radius:6px;font-size:12px;cursor:pointer;transition:all .12s;}
+.exportbtn:hover{background:var(--espresso);color:var(--cream);}
+
+@media(max-width:600px){.main{padding:14px 10px 80px;}.pbar{width:110px;}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-row">
+    <div>
+      <div class="hbrand">Balanced Vitality · Craftsman Capital Partners</div>
+      <div class="htitle">Pilot Franchisee — Investor Working Document</div>
+      <div class="hsub">River Oaks · Southlake · Pre-Franchise Interim Structure</div>
+    </div>
+    <div class="pwrap">
+      <div class="plabel" id="plabel">Loading…</div>
+      <div class="pbar"><div class="pfill" id="pfill" style="width:0%"></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="tabs" id="tabs"></div>
+
+<div class="main">
+  <div id="config-section"></div>
+  <div id="summary"></div>
+  <div id="content"></div>
+  <button class="exportbtn" onclick="exportDoc()">⬇ Export Full Q&A</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════════════════
+// AIRTABLE CONFIG
+// Fill these in, or leave blank to see setup instructions
+// ══════════════════════════════════════════════════════
+const CONFIG = {
+  // Your Airtable Personal Access Token
+  // Create at: airtable.com/create/tokens
+  // Required scopes: data.records:read, data.records:write
+  apiKey: 'patwZgJWKVqSsYmw9.af67230bb62b96b6101295eb4f2b825badfc2931ba0a0c899833e954650a79ed',
+
+  // Your Airtable Base ID (starts with "app")
+  // Find it at: airtable.com/api → select your base → shows in URL
+  baseId: 'appeTnbXk9GpGBIY',
+
+  // Table names — create these tables in your Airtable base
+  answersTable: 'Answers',
+  followupsTable: 'Followups',
+};
+
+// ══════════════════════════════════════════════════════
+// QUESTIONS
+// ══════════════════════════════════════════════════════
+const CATS = [
+  { id:"clinical", label:"Clinical", title:"Clinical Governance & Medical Oversight",
+    desc:"The foundation everything else rests on. You're non-operators — Dr. Johnson and BV's physician network are the clinical backbone. These questions ensure that backbone is contractually secured.",
+    qs:[
+      {id:"c1",text:"What is Dr. Johnson's legal obligation to provide medical oversight to your locations — is this in writing, and what happens if he gets sick, retires, or BV has a falling out with CCP?",ctx:"This is the single most important question. If Dr. Johnson is unavailable and there's no succession plan, your locations cannot operate."},
+      {id:"c2",text:"Who is the physician of record at each of your two locations and how does the hub-and-spoke telehealth model satisfy Texas Medical Board requirements for physician supervision?",ctx:"Texas requires physician supervision of NPs performing clinical treatments. The specific structure needs to be documented and compliant."},
+      {id:"c3",text:"What is the clinical succession plan if Dr. Johnson dies or becomes incapacitated — and is there a written commitment to execute that plan?",ctx:"This should not be left to goodwill. A named successor or a defined process for finding one should be in writing."},
+      {id:"c4",text:"If a patient has an adverse event at your location, who carries the liability and what does BV's obligation to support you look like — legally and practically?",ctx:"Malpractice exposure, indemnification, and crisis support need to be addressed before you open."},
+      {id:"c5",text:"Can BV change clinical protocols in ways that materially affect your business without your consent — and if so, what is the notice period and do you have any right to object?",ctx:"Protocol changes could make services unavailable, add costs, or change the patient experience you've built around."},
+      {id:"c6",text:"Who controls the CDSS and the biomarker methodology — and what access rights do your locations retain if BV's relationship with CCP deteriorates?",ctx:"The CDSS is the clinical IP. If the relationship breaks down, you need to know whether your locations can continue to operate."},
+    ]},
+  { id:"support", label:"BV Support", title:"Brand & Operational Support Commitments",
+    desc:"You're building to BV's standards under BV's brand. What exactly is BV committing to deliver — and when — in exchange for that commitment?",
+    qs:[
+      {id:"s1",text:"What training does BV commit to provide before your locations open — for clinical staff, operational staff, and your management team?",ctx:"Training is not optional. You need specific commitments: who trains, for how long, at whose expense, and what happens if training isn't complete before opening."},
+      {id:"s2",text:"What ongoing training and support is committed after opening — and is there a minimum service level (hours per month, response time, dedicated contact)?",ctx:"Ongoing support is where most pilot agreements are vague. You need a floor, not a promise."},
+      {id:"s3",text:"What marketing assets, templates, and brand guidelines are you receiving — and who controls brand updates that could require you to redo materials, signage, or the website?",ctx:"If BV refreshes the brand, who pays for your location's rebrand?"},
+      {id:"s4",text:"What does the BV Platform technology commitment look like — when does it launch, what happens to your locations in the interim, and is there a penalty or remedy if it's significantly delayed?",ctx:"The platform is a January 2027 target. If it slips, your locations need to operate on something."},
+      {id:"s5",text:"What is BV's obligation to maintain its Cleveland Clinic relationship and other vendor relationships your locations will depend on?",ctx:"If Cleveland Clinic ends its relationship with BV, you need a contingency. Who is responsible for finding an alternative?"},
+      {id:"s6",text:"What pricing do your locations get from compounding pharmacies and IV supply vendors — the same as Turtle Creek, or negotiated separately?",ctx:"Pricing parity with the flagship is a meaningful economic issue, especially for GLP-1 compounds where costs are volatile."},
+    ]},
+  { id:"territory", label:"Territory", title:"Territory Protection",
+    desc:"River Oaks and Southlake are premium markets. These protections need to be locked in writing before you spend a dollar on buildout.",
+    qs:[
+      {id:"t1",text:"What are the exact territory boundaries for River Oaks and Southlake — and are they defined now in writing using the QPU system, or deferred to the formal franchise agreement?",ctx:"Vague territory definitions get exploited. The QPU system defines territories precisely — these should be attached to your interim agreement."},
+      {id:"t2",text:"What happens if BV or CCP decides to open a corporate-owned location that overlaps with your territory before the formal franchise agreement is signed?",ctx:"During the interim period, there's no FDD protecting your territory. You need explicit language."},
+      {id:"t3",text:"What protection do you have against BV granting another franchisee a territory that competes with yours — including patients who could be served via telehealth from a nearby location?",ctx:"Telehealth creates a leakage risk even with physical territory protections. This needs to be addressed."},
+      {id:"t4",text:"If the formal franchise uses the QPU territory system, what is the minimum QPU count your territories are guaranteed — and is that locked in today?",ctx:"The QPU minimum standard is 25,000. River Oaks and Southlake both qualify comfortably, but locking the actual boundaries now prevents future disputes."},
+    ]},
+  { id:"financial", label:"Financial", title:"Financial Terms & Economics",
+    desc:"You're committing capital before the franchise fee structure is finalized. Every financial term that isn't locked now is a negotiation you'll have from a weaker position later.",
+    qs:[
+      {id:"f1",text:"What royalty rate applies when you convert to a formal franchise — is it locked in now, or subject to whatever the FDD says at the time of conversion?",ctx:"If the royalty rate isn't locked, you're building a business on terms that could be set against you later."},
+      {id:"f2",text:"Is there a royalty holiday during the pilot period — and if so, for exactly how long?",ctx:"Most franchise systems offer a royalty holiday to early locations in recognition of the development risk they take."},
+      {id:"f3",text:"What is the franchise fee for conversion — full fee, discounted as early adopters, or waived given the development risk you're absorbing?",ctx:"You're essentially pre-selling two franchise locations for BV. That has real value to BV that should be reflected in the conversion terms."},
+      {id:"f4",text:"What are the buildout standards — who approves the build spec, and what happens if BV changes design standards before you open and requires modifications at your expense?",ctx:"Design standard changes mid-buildout have happened to franchisees before. You need a change-order protection."},
+      {id:"f5",text:"Who owns the leasehold improvements and your investment in the buildout if the relationship terminates — and what are your rights to continue operating under a different name?",ctx:"If BV walks away or is acquired, you need to know what you own and whether you can continue."},
+      {id:"f6",text:"What happens to your investment if conversion to a formal franchise is delayed beyond a specific date — is there a financial remedy or a right to terminate?",ctx:"If the franchise never launches, or launches on different terms than expected, you need a defined remedy."},
+    ]},
+  { id:"exit", label:"Exit & Change", title:"Exit & Change of Control Protection",
+    desc:"This is what the investors are most worried about — and probably not thinking about completely. The scenarios need to be mapped explicitly.",
+    qs:[
+      {id:"e1",text:"If BV is acquired, what is your right to be included in the transaction — tag-along right as a franchisee, option to be purchased at a defined multiple, or something else?",ctx:"Without explicit language, an acquirer of BV has no obligation to honor your interim agreement or include you in any deal."},
+      {id:"e2",text:"If the franchise concept never launches, what are your options — operate independently under a protocol license, sell back to BV at a defined price, or something else?",ctx:"This is the no-franchise scenario. Every investor needs to know what their downside protection looks like if it never materializes."},
+      {id:"e3",text:"If CCP exits its BV investment, does your pilot agreement survive — and is the acquirer of CCP's position required to honor your agreement?",ctx:"CCP and BV are separate entities. A change in CCP's ownership position shouldn't affect your rights, but this needs to be explicit."},
+      {id:"e4",text:"Do you have a right of first refusal if BV decides to sell franchise rights in your territory to a third party?",ctx:"Without a ROFR, BV could sell your territory out from under you between the pilot period and franchise launch."},
+      {id:"e5",text:"If BV substantially changes the model — moves away from biomarker-driven protocols, changes the brand materially, changes the pricing structure — do you have a right to exit the agreement?",ctx:"A material change in the BV model could make your investment unviable. You need a termination right tied to material changes."},
+      {id:"e6",text:"What non-compete obligations apply to you if the relationship terminates — and for how long and in what geography?",ctx:"A broad non-compete could prevent you from operating any wellness practice if the BV relationship ends. This needs to be negotiated now."},
+    ]},
+  { id:"governance", label:"Governance", title:"Relationship & Governance During Interim",
+    desc:"Operating in the gray zone between patient, pilot franchisee, and investor. The governance structure needs to be explicit.",
+    qs:[
+      {id:"g1",text:"Do you have a formal seat at the table in decisions that affect your locations — advisory committee, board observer rights, or some other mechanism?",ctx:"Without a formal governance seat, decisions get made without you and you're informed after the fact."},
+      {id:"g2",text:"How are disputes between your locations and BV resolved — is there a defined escalation process, or does everything default to litigation?",ctx:"A mediation-first, arbitration-second clause protects both parties from costly litigation over operational disputes."},
+      {id:"g3",text:"What information rights do you have — financial performance of the BV network, protocol changes, vendor changes, regulatory issues affecting BV?",ctx:"As investors, you need visibility into what's happening at the network level, not just your own locations."},
+      {id:"g4",text:"If Dr. Johnson and CCP have a disagreement that affects BV's direction, whose interests protect your position as pilot franchisees?",ctx:"You're wearing multiple hats. A conflict between BV and CCP puts you in a difficult position that needs a defined resolution path."},
+      {id:"g5",text:"What performance standards are you expected to meet during the pilot period — and what are the consequences if you miss them for reasons outside your control?",ctx:"Performance benchmarks for conversion are often the sleeper issue. BV needs the right to not convert underperforming pilots, but you need protection against being denied conversion for reasons you couldn't control."},
+      {id:"g6",text:"Is there a non-solicitation of your patients by BV corporate locations or other franchisees — and how is this enforced?",ctx:"Patient records are held by the BV network. If you separate, you need to know what happens to your patient relationships."},
+    ]},
+  { id:"regulatory", label:"Regulatory", title:"Regulatory & Compliance Risk",
+    desc:"Non-operators underestimate regulatory risk in cash-pay functional medicine. The environment is shifting — GLP-1 compounds are under active FDA scrutiny right now.",
+    qs:[
+      {id:"r1",text:"If the FDA's position on compounded GLP-1 medications changes and a key revenue service becomes unavailable, who bears the revenue risk — and is there a royalty adjustment mechanism?",ctx:"This is a live risk today. Semaglutide was removed from the FDA shortage list in March 2025. Compounded tirzepatide is under active litigation. Your locations are exposed."},
+      {id:"r2",text:"Who is responsible for ensuring your locations are compliant with Texas Medical Board requirements, HIPAA, TCPA, and other applicable regulations — and what support does BV provide if a compliance issue arises?",ctx:"Compliance failures are your legal exposure as operators. You need BV's support commitment and a clear division of responsibility."},
+      {id:"r3",text:"If a regulatory investigation or enforcement action targets BV practices generally, what protection do you have as an individual location operator?",ctx:"A corporate-level investigation could affect your locations even if you did nothing wrong. You need an indemnification or notification framework."},
+      {id:"r4",text:"What insurance coverage does BV require of your locations — malpractice, general liability, cyber, business interruption — and who arranges the coverage?",ctx:"BV should specify minimum coverage requirements. As non-operators in a medical setting, you may need guidance on what's appropriate and available."},
+      {id:"r5",text:"What happens to your agreement if a patient lawsuit targeting BV damages the brand materially — and do you have any right to exit if the brand is seriously impaired?",ctx:"Brand impairment from litigation is a real risk in a medical practice. Your investment is tied to the BV brand's value."},
+    ]}
+];
+
+// ── PERSON COLORS
+const PEOPLE = ['Barrett','Stephanie','Melanie','Frank'];
+const COLORS = { Barrett:'#2E75B6', Stephanie:'#7B5EA7', Melanie:'#0D6B6E', Frank:'#8B3A00' };
+
+// ── STATE
+let answers   = {};  // { qid: [{author,text,ts,airtableId}] }
+let followups = {};  // { catId: [{id,text,ctx}] }
+let activeCat = 'clinical';
+let responder = 'Barrett';
+let generating = false;
+let configured = false;
+
+// ══════════════════════════════════════════════════════
+// AIRTABLE API
+// ══════════════════════════════════════════════════════
+
+function atHeaders() {
+  return {
+    'Authorization': 'Bearer ' + CONFIG.apiKey,
+    'Content-Type': 'application/json'
+  };
+}
+
+function atUrl(table, params='') {
+  return `https://api.airtable.com/v0/${CONFIG.baseId}/${encodeURIComponent(table)}${params}`;
+}
+
+async function atGet(table, filterFormula) {
+  const params = filterFormula
+    ? '?filterByFormula=' + encodeURIComponent(filterFormula)
+    : '';
+  const res = await fetch(atUrl(table, params), { headers: atHeaders() });
+  if (!res.ok) throw new Error('Airtable GET failed: ' + res.status + ' ' + await res.text());
+  return res.json();
+}
+
+async function atCreate(table, fields) {
+  const res = await fetch(atUrl(table), {
+    method: 'POST',
+    headers: atHeaders(),
+    body: JSON.stringify({ fields })
+  });
+  if (!res.ok) throw new Error('Airtable POST failed: ' + res.status + ' ' + await res.text());
+  return res.json();
+}
+
+async function atDelete(table, recordId) {
+  const res = await fetch(atUrl(table) + '/' + recordId, {
+    method: 'DELETE',
+    headers: atHeaders()
+  });
+  if (!res.ok) throw new Error('Airtable DELETE failed: ' + res.status);
+  return res.json();
+}
+
+// ══════════════════════════════════════════════════════
+// LOAD ALL ANSWERS FROM AIRTABLE
+// ══════════════════════════════════════════════════════
+
+async function loadAnswers() {
+  const data = await atGet(CONFIG.answersTable);
+  answers = {};
+  for (const rec of data.records) {
+    const f  = rec.fields;
+    const qid = f['QuestionID'];
+    if (!qid) continue;
+    if (!answers[qid]) answers[qid] = [];
+    answers[qid].push({
+      author:      f['Author'] || 'Unknown',
+      text:        f['Answer'] || '',
+      ts:          new Date(f['Timestamp'] || rec.createdTime).getTime(),
+      airtableId:  rec.id
+    });
+  }
+  // Sort each question's answers by timestamp
+  for (const qid of Object.keys(answers)) {
+    answers[qid].sort((a,b) => a.ts - b.ts);
+  }
+}
+
+async function loadFollowups() {
+  try {
+    const data = await atGet(CONFIG.followupsTable);
+    followups = {};
+    for (const rec of data.records) {
+      const f     = rec.fields;
+      const catId = f['CategoryID'];
+      if (!catId) continue;
+      if (!followups[catId]) followups[catId] = [];
+      followups[catId].push({
+        id:          rec.id,
+        text:        f['Question'] || '',
+        ctx:         f['Context'] || 'AI-generated follow-up',
+        airtableId:  rec.id
+      });
+    }
+  } catch(e) {
+    console.warn('Followups table may not exist yet:', e.message);
+  }
+}
+
+// ══════════════════════════════════════════════════════
+// BOOT
+// ══════════════════════════════════════════════════════
+
+async function boot() {
+  configured = !!(CONFIG.apiKey && CONFIG.baseId);
+
+  if (!configured) {
+    renderConfigSection();
+    render();
+    return;
+  }
+
+  document.getElementById('config-section').innerHTML = '';
+  document.getElementById('content').innerHTML =
+    '<div class="loading-card"><div class="spinner"></div><br>Loading responses…</div>';
+
+  try {
+    await Promise.all([loadAnswers(), loadFollowups()]);
+  } catch(e) {
+    document.getElementById('content').innerHTML =
+      `<div class="loading-card" style="color:var(--red)">
+        Could not connect to Airtable.<br>
+        <small>${e.message}</small>
+      </div>`;
+    return;
+  }
+
+  render();
+}
+
+// ══════════════════════════════════════════════════════
+// SUBMIT
+// ══════════════════════════════════════════════════════
+
+async function doSubmit(qid) {
+  const ta = document.getElementById('ta-' + qid);
+  if (!ta) return;
+  const text = ta.value.trim();
+  if (!text) { toast('Please type an answer first', false); return; }
+
+  const btn = document.getElementById('sb-' + qid);
+  if (btn) { btn.disabled = true; btn.textContent = 'Saving…'; }
+
+  const entry = {
+    author: responder,
+    text,
+    ts: Date.now(),
+    airtableId: null
+  };
+
+  // Optimistic update
+  if (!answers[qid]) answers[qid] = [];
+  answers[qid].push(entry);
+  ta.value = '';
+  render();
+  toast('✓ Saved', true);
+
+  // Persist to Airtable
+  try {
+    const rec = await atCreate(CONFIG.answersTable, {
+      QuestionID: qid,
+      Author:     responder,
+      Answer:     text,
+      Timestamp:  new Date().toISOString()
+    });
+    // Store the Airtable record ID so we could delete/edit later
+    entry.airtableId = rec.id;
+  } catch(e) {
+    toast('⚠ Answer shown but not saved to Airtable: ' + e.message, false);
+    console.error('Airtable save error:', e);
+  }
+}
+
+// ══════════════════════════════════════════════════════
+// RENDER
+// ══════════════════════════════════════════════════════
+
+function render() {
+  renderTabs();
+  renderSummary();
+  renderContent();
+  renderProgress();
+}
+
+function renderConfigSection() {
+  document.getElementById('config-section').innerHTML = `
+    <div class="config-banner">
+      <div class="config-title">⚙ Setup Required — Connect to Airtable</div>
+      <div class="config-desc">
+        This tool stores all responses in Airtable so anyone with the link can read and submit answers — no account required.
+        You need to create a free Airtable base and paste your credentials below, or edit the CONFIG block at the top of this HTML file.
+      </div>
+
+      <div class="config-row">
+        <div class="config-label">Step 1 — Create a free Airtable account at airtable.com</div>
+      </div>
+
+      <div class="config-row">
+        <div class="config-label">Step 2 — Create a new Base called "BV Pilot Q&A"</div>
+        <div class="config-note">Inside the base, create two tables with these exact columns:</div>
+        <div class="config-code">Table 1: "Answers"
+Columns: QuestionID (text), Author (text), Answer (long text), Timestamp (text)
+
+Table 2: "Followups"
+Columns: CategoryID (text), Question (long text), Context (long text)</div>
+      </div>
+
+      <div class="config-row">
+        <div class="config-label">Step 3 — Create a Personal Access Token</div>
+        <div class="config-note">Go to airtable.com/create/tokens → Create token → Add scopes: data.records:read + data.records:write → Add your base → Copy the token</div>
+      </div>
+
+      <div class="config-row">
+        <div class="config-label">Step 4 — Find your Base ID</div>
+        <div class="config-note">Go to airtable.com/api → click your base → the URL shows: airtable.com/api/v0/<b>appXXXXXXXX</b>/... — copy that ID</div>
+      </div>
+
+      <div class="config-row">
+        <div class="config-label">Paste credentials here to test:</div>
+        <input class="config-input" id="cfg-key" placeholder="Personal Access Token (pat...)" />
+        <input class="config-input" id="cfg-base" placeholder="Base ID (app...)" style="margin-top:6px"/>
+        <button class="config-btn" style="margin-top:10px" onclick="applyConfig()">Connect & Test</button>
+      </div>
+
+      <div class="config-note" style="margin-top:12px;color:var(--red)">
+        ⚠ Once connected, edit the CONFIG block at the top of this file with your credentials and re-deploy. The fields above are for testing only and won't persist on reload.
+      </div>
+    </div>`;
+}
+
+function applyConfig() {
+  const key  = document.getElementById('cfg-key').value.trim();
+  const base = document.getElementById('cfg-base').value.trim();
+  if (!key || !base) { toast('Enter both token and base ID', false); return; }
+  CONFIG.apiKey  = key;
+  CONFIG.baseId  = base;
+  configured = true;
+  document.getElementById('config-section').innerHTML = '';
+  boot();
+}
+
+function renderTabs() {
+  document.getElementById('tabs').innerHTML = CATS.map(c =>
+    `<div class="tab ${c.id===activeCat?'active':''}" onclick="switchCat('${c.id}')">${c.label}</div>`
+  ).join('');
+}
+
+function renderProgress() {
+  const allQs = CATS.flatMap(c => c.qs);
+  const fuAll  = Object.values(followups).flat();
+  const total  = allQs.length + fuAll.length;
+  const done   = Object.keys(answers).filter(k => answers[k]?.length > 0).length;
+  const pct    = total ? Math.round(done/total*100) : 0;
+  document.getElementById('pfill').style.width  = pct + '%';
+  document.getElementById('plabel').textContent = `${done} of ${total} answered`;
+}
+
+function renderSummary() {
+  const allQs = CATS.flatMap(c => c.qs);
+  const fuAll  = Object.values(followups).flat();
+  const total  = allQs.length + fuAll.length;
+  const done   = Object.keys(answers).filter(k => answers[k]?.length > 0).length;
+  const rCount = Object.values(answers).reduce((s,a) => s+(a?.length||0), 0);
+  document.getElementById('summary').innerHTML = `
+    <div class="summary">
+      <div class="sstat"><div class="sn">${total}</div><div class="sl">Questions</div></div>
+      <div class="sstat"><div class="sn">${done}</div><div class="sl">Answered</div></div>
+      <div class="sstat"><div class="sn">${Object.values(followups).flat().length}</div><div class="sl">Follow-ups</div></div>
+      <div class="sstat"><div class="sn">${rCount}</div><div class="sl">Responses</div></div>
+    </div>`;
+}
+
+function renderContent() {
+  const cat    = CATS.find(c => c.id === activeCat);
+  const fuList = (followups[activeCat] || []).map(fq => ({...fq, isFU:true}));
+  const allQs  = [...cat.qs, ...fuList];
+  const catIdx = CATS.indexOf(cat);
+
+  let html = `
+    <div class="ceyebrow">Category ${catIdx+1} of ${CATS.length}</div>
+    <div class="ctitle">${cat.title}</div>
+    <div class="cdesc">${cat.desc}</div>
+  `;
+
+  allQs.forEach((q, qi) => {
+    const ans     = answers[q.id] || [];
+    const hasSome = ans.length > 0;
+    const isFU    = !!q.isFU;
+    const qNum    = isFU ? 'Follow-up' : `Question ${qi+1} of ${allQs.length}`;
+
+    html += `<div class="qcard ${hasSome?'answered':''} ${isFU?'followup':''}">
+      <div class="qhead">
+        <div class="qmeta">
+          <span class="badge ${hasSome?'done':isFU?'fu':''}">${hasSome?'✓ Answered':isFU?'⟡ Follow-up':'Pending'}</span>
+          <span class="qnum">${qNum}${!isFU?' &middot; '+q.id.toUpperCase():''}</span>
+        </div>
+        <div class="qtext">${q.text}</div>
+        ${q.ctx ? `<div class="qctx">${q.ctx}</div>` : ''}
+      </div>`;
+
+    if (hasSome) {
+      html += `<div class="answers-wrap"><div class="alabel">Responses (${ans.length})</div>`;
+      ans.forEach(a => {
+        const c = COLORS[a.author] || '#666';
+        html += `<div class="abubble" style="border-left:3px solid ${c}">
+          <div class="ameta">
+            <span class="aauthor" style="color:${c}">${esc(a.author)}</span>
+            <span class="atime">${fmtTime(a.ts)}</span>
+          </div>
+          <div class="atext">${esc(a.text)}</div>
+        </div>`;
+      });
+      html += `</div>`;
+    }
+
+    html += `<div class="inputarea">
+      <div class="ilabel">Your response:</div>
+      <div class="responders" id="resp-${q.id}">
+        ${PEOPLE.map(p => {
+          const active = responder === p;
+          const c = COLORS[p] || '#666';
+          const style = active ? `background:${c};color:#fff;border-color:${c}` : '';
+          return `<button class="rbtn" style="${style}" onclick="setResponder('${p}','${q.id}')">${p}</button>`;
+        }).join('')}
+      </div>
+      <textarea class="ainput" id="ta-${q.id}"
+        placeholder="Type your answer here…"
+        oninput="document.getElementById('cc-${q.id}').textContent=this.value.length+' chars'"
+        rows="3"></textarea>
+      <div class="ifooter">
+        <span class="ccount" id="cc-${q.id}">0 chars</span>
+        <div class="btnrow">
+          <button class="sbtn" id="sb-${q.id}" onclick="doSubmit('${q.id}')">Submit</button>
+        </div>
+      </div>
+    </div></div>`;
+  });
+
+  document.getElementById('content').innerHTML = html;
+}
+
+// ── HELPERS
+function switchCat(id) {
+  activeCat = id;
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function setResponder(name, qid) {
+  responder = name;
+  const wrap = document.getElementById('resp-' + qid);
+  if (wrap) {
+    wrap.querySelectorAll('.rbtn').forEach(b => {
+      const p = b.textContent.trim();
+      const active = p === name;
+      const c = COLORS[p] || '#666';
+      b.style.background   = active ? c : '';
+      b.style.color        = active ? '#fff' : '';
+      b.style.borderColor  = active ? c : '';
+    });
+  }
+}
+
+function exportDoc() {
+  const lines = ['BV PILOT FRANCHISEE — INVESTOR WORKING DOCUMENT','River Oaks · Southlake', new Date().toLocaleDateString(), ''];
+  CATS.forEach(cat => {
+    lines.push('═'.repeat(60), cat.title.toUpperCase(), '═'.repeat(60));
+    [...cat.qs, ...(followups[cat.id]||[])].forEach(q => {
+      lines.push('', `[${(q.id||'FU').toUpperCase()}] ${q.text}`);
+      const ans = answers[q.id] || [];
+      if (!ans.length) lines.push('  → Not yet answered');
+      else ans.forEach(a => lines.push(`  ${a.author}: ${a.text}`));
+    });
+    lines.push('');
+  });
+  const blob = new Blob([lines.join('\n')], {type:'text/plain'});
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url; a.download = 'BV_Pilot_Investor_QA.txt'; a.click();
+  URL.revokeObjectURL(url);
+}
+
+function esc(s='') {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+}
+function fmtTime(ts) {
+  if (!ts) return '';
+  const d = new Date(ts);
+  return d.toLocaleDateString('en-US',{month:'short',day:'numeric'})+' '+
+         d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+}
+let toastT;
+function toast(msg, ok=true) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'toast show ' + (ok ? 'ok' : 'err');
+  clearTimeout(toastT);
+  toastT = setTimeout(() => el.classList.remove('show'), 3500);
+}
+
+boot();
+</script>
+</body>
+</html>
